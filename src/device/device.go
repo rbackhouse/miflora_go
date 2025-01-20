@@ -21,5 +21,5 @@ type DeviceHandler interface {
 
 type Handler interface {
 	HandleReadings(sensorReadings sensor.SensorReadings, sensorName string, deviceAddress string)
-	HandleBatteryLevel(batteryLevel int, sensorName string, deviceAddress string)
+	HandleBatteryLevel(batteryLevel int, firmware string, sensorName string, deviceAddress string)
 }

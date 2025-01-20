@@ -49,7 +49,7 @@ func connect(deviceAddr bluetooth.Address) ([]bluetooth.DeviceCharacteristic, er
 	return characteristics, nil
 }
 
-func getBatteryLevel(deviceAddr bluetooth.Address) (int, error) {
+func getBatteryLevel(deviceAddr bluetooth.Address) (int, string, error) {
 	characteristics, err := connect(deviceAddr)
 	//defer device.Disconnect()
 	if err == nil {
@@ -59,27 +59,28 @@ func getBatteryLevel(deviceAddr bluetooth.Address) (int, error) {
 				_, err = characteristic.Read(buf)
 				if err != nil {
 					logger.Warnf("Failed to read firmware: %s", err.Error())
-					return -1, err
+					return -1, "", err
 				}
-				return int(buf[0]), nil
+				firmware := string(buf[2:])
+				return int(buf[0]), firmware, nil
 			}
 		}
 	}
-	return -1, err
+	return -1, "", err
 }
 
-func GetBatteryLevel(deviceAddr bluetooth.Address) (int, error) {
+func GetBatteryLevel(deviceAddr bluetooth.Address) (int, string, error) {
 	var err error
 
 	for i := 0; i < 5; i++ {
-		batteryLevel, err := getBatteryLevel(deviceAddr)
+		batteryLevel, firmware, err := getBatteryLevel(deviceAddr)
 		if err == nil {
-			return batteryLevel, nil
+			return batteryLevel, firmware, nil
 		}
 		logger.Info("Sleeping for 10 seconds")
 		time.Sleep(10 * time.Second)
 	}
-	return -1, err
+	return -1, "", err
 }
 
 func getReadings(deviceAddr bluetooth.Address) (SensorReadings, error) {

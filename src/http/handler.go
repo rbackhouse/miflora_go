@@ -19,6 +19,7 @@ type BatteryData struct {
 	SensorName    string `json:"sensorName"`
 	DeviceAddress string `json:"deviceAddress"`
 	BatteryLevel  int    `json:"batteryLevel"`
+	Firmware      string `json:"firmware"`
 }
 
 func NewHttpHandler(cfg config.Config) device.Handler {
@@ -38,11 +39,12 @@ func (h *httpData) HandleReadings(sensorReadings sensor.SensorReadings, sensorNa
 	sendHttpRequest(h.config, payloadBuf, h.config.URLSuffix+"sensordata")
 }
 
-func (h *httpData) HandleBatteryLevel(batteryLevel int, sensorName string, deviceAddress string) {
+func (h *httpData) HandleBatteryLevel(batteryLevel int, firmware string, sensorName string, deviceAddress string) {
 	body := &BatteryData{
 		SensorName:    sensorName,
 		DeviceAddress: deviceAddress,
 		BatteryLevel:  batteryLevel,
+		Firmware:      firmware,
 	}
 	payloadBuf := new(bytes.Buffer)
 	json.NewEncoder(payloadBuf).Encode(body)

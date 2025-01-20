@@ -50,10 +50,11 @@ func (c *handle) getBatteryLevel() {
 	mu.Lock()
 	defer mu.Unlock()
 	//logger.Infof("Checking Battery Level on %s", c.config.DeviceId)
-	batteryLevel, err := sensor.GetBatteryLevel(c.addr)
+	batteryLevel, firmware, err := sensor.GetBatteryLevel(c.addr)
 	if err == nil {
 		logger.Infof("Battery Level for %s : %d\n", c.config.Name, batteryLevel)
-		c.handler.HandleBatteryLevel(batteryLevel, c.config.Name, c.config.DeviceId)
+		logger.Infof("Firmware for %s : %s\n", c.config.Name, firmware)
+		c.handler.HandleBatteryLevel(batteryLevel, firmware, c.config.Name, c.config.DeviceId)
 	}
 }
 

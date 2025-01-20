@@ -20,7 +20,7 @@ func (e *email) HandleReadings(sensorReadings sensor.SensorReadings, sensorName 
 	sendEmail(e.config, message, e.toAddresses)
 }
 
-func (e *email) HandleBatteryLevel(batteryLevel int, sensorName string, deviceAddress string) {
-	message := fmt.Sprintf("To: %v\r\nSubject: Sensor Battery Level for %s\r\n\r\nBattery Level : %d for: %s", e.toAddresses, sensorName, batteryLevel, sensorName)
+func (e *email) HandleBatteryLevel(batteryLevel int, firmware string, sensorName string, deviceAddress string) {
+	message := fmt.Sprintf("To: %v\r\nSubject: Sensor Battery Level for %s\r\n\r\nBattery Level: %d%%\r\nFirmware: %s", e.toAddresses, sensorName, batteryLevel, firmware)
 	sendEmail(e.config, message, e.toAddresses)
 }

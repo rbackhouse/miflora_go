@@ -33,9 +33,10 @@ func (m *mqttData) HandleReadings(sensorReadings sensor.SensorReadings, sensorNa
 	publishMessage(m.config.MqttTopic, messageJSON)
 }
 
-func (m *mqttData) HandleBatteryLevel(batteryLevel int, sensorName string, deviceAddress string) {
+func (m *mqttData) HandleBatteryLevel(batteryLevel int, firmware string, sensorName string, deviceAddress string) {
 	values := map[string]interface{}{
 		"batteryLevel": batteryLevel,
+		"firmware":     firmware,
 	}
 	data := &DeviceData{
 		DeviceName:    sensorName,
