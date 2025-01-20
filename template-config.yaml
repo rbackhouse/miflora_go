@@ -1,0 +1,27 @@
+handlerType: ""
+
+email:
+  smtpHost: ""
+  smtpPort: 587
+  password: ""
+  fromAddress: ""
+  toAddresses: 
+    - ""
+
+http:
+  httpHost: ""
+  httpPort: 8080
+  urlSuffix: ""
+
+mqtt:
+  mqttBroker: ""
+  mqttPort: 1883
+  mqttTopic: ""
+
+sensors:
+  - deviceId: ""
+    name: ""
+    readingsInterval: "1m"
+    batteryLevelInterval: "12h"
+    moistureMax: -1
+    moistureMin: -1
